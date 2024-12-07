@@ -148,19 +148,22 @@ class CostumeTab extends React.Component {
         const blob = new Blob([item.asset.data], {type: item.asset.assetType.contentType});
         downloadBlob(`${item.name}.${item.asset.dataFormat}`, blob);
     }
-    handleNewCostume (costume, fromCostumeLibrary, targetId) {
+    async handleNewCostume (costume, fromCostumeLibrary, targetId) {
         const costumes = Array.isArray(costume) ? costume : [costume];
-
-        return Promise.all(costumes.map(c => {
+        const result = [];
+        for (const c of costumes) {
             if (fromCostumeLibrary) {
-                return this.props.vm.addCostumeFromLibrary(c.md5, c);
+                result.push(await this.props.vm.addCostumeFromLibrary(c.md5, c));
+            } else {
+                // If targetId is falsy, VM should default it to editingTarget.id
+                // However, targetId should be provided to prevent #5876,
+                // if making new costume takes a while
+                result.push(await this.props.vm.addCostume(c.md5, c, targetId));
             }
-            // If targetId is falsy, VM should default it to editingTarget.id
-            // However, targetId should be provided to prevent #5876,
-            // if making new costume takes a while
-            return this.props.vm.addCostume(c.md5, c, targetId);
-        }));
+        }
+        return result;
     }
+
     handleNewBlankCostume () {
         const name = this.props.vm.editingTarget.isStage ?
             this.props.intl.formatMessage(messages.backdrop, {index: 1}) :
@@ -200,11 +203,11 @@ class CostumeTab extends React.Component {
                 vmCostumes.forEach((costume, i) => {
                     costume.name = `${fileName}${i ? i + 1 : ''}`;
                 });
-                this.handleNewCostume(vmCostumes, false, targetId).then(() => {
+                console.log(this.handleNewCostume(vmCostumes, false, targetId).then(() => {
                     if (fileIndex === fileCount - 1) {
                         this.props.onCloseImporting();
                     }
-                });
+                }));
             }, this.props.onCloseImporting);
         }, this.props.onCloseImporting);
     }
