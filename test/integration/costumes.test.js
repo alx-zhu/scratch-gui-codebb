@@ -200,7 +200,7 @@ describe('Working with costumes', () => {
         const logs = await getLogs();
         await expect(logs).toEqual([]);
     });
-
+  
     test('Adding a letter costume through the Letters filter in the library', async () => {
         await loadUri(uri);
         await driver.manage()
