@@ -150,6 +150,11 @@ class CostumeTab extends React.Component {
     }
     async handleNewCostume (costume, fromCostumeLibrary, targetId) {
         const costumes = Array.isArray(costume) ? costume : [costume];
+
+        // Costumes should be added one by one to ensure they are not received out of
+        // order by the VM. Parallel adding of costumes were causing out of order gifs
+        // for large gif costumes per #5875. Additionally, updated to async await
+        // for most up to date syntax.
         const result = [];
         for (const c of costumes) {
             if (fromCostumeLibrary) {
