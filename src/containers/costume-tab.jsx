@@ -208,11 +208,11 @@ class CostumeTab extends React.Component {
                 vmCostumes.forEach((costume, i) => {
                     costume.name = `${fileName}${i ? i + 1 : ''}`;
                 });
-                console.log(this.handleNewCostume(vmCostumes, false, targetId).then(() => {
+                this.handleNewCostume(vmCostumes, false, targetId).then(() => {
                     if (fileIndex === fileCount - 1) {
                         this.props.onCloseImporting();
                     }
-                }));
+                });
             }, this.props.onCloseImporting);
         }, this.props.onCloseImporting);
     }
