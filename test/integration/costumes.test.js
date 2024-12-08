@@ -201,34 +201,6 @@ describe('Working with costumes', () => {
         await expect(logs).toEqual([]);
     });
 
-    // test('Adding a large GIF as costumes (order verification)', async () => {
-    //     await loadUri(uri);
-    //     await clickText('Costumes');
-    //     const el = await findByXpath('//button[@aria-label="Choose a Costume"]');
-    //     await driver.actions().mouseMove(el).perform();
-    //     await driver.sleep(500); // Wait for menu to load
-    //     const input = await findByXpath('//input[@type="file"]');
-    //     await input.sendKeys(path.resolve(__dirname, '../fixtures/stones.gif'));
-    
-    //     // Retrieve costume elements in their UI order
-    //     const costumeElements = await driver.findElements(By.css('.sprite-selector-item_sprite-name_iMqNV'));
-    //     const costumeNames = [];
-    //     for (const element of costumeElements) {
-    //         const name = await element.getText();
-    //         costumeNames.push(name);
-    //     }
-    //     console.log('costume names found:', costumeNames);
-    
-    //     const expectedNames = [];
-    //     for (let i = 1; i <= 45; i++) {
-    //         expectedNames.push(i === 1 ? 'stones' : `stones${i}`);
-    //     }
-    //     expect(costumeNames).toEqual(expectedNames);
-    
-    //     const logs = await getLogs();
-    //     expect(logs).toEqual([]);
-    // });
-
     test('Adding a letter costume through the Letters filter in the library', async () => {
         await loadUri(uri);
         await driver.manage()
